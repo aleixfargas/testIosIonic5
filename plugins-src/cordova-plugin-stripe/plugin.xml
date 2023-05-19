@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-stripe" version="1.5.3" xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>cordova-plugin-stripe</name>
+
+    <js-module name="CordovaStripePlugin" src="www/CordovaStripePlugin.js">
+        <clobbers target="cordova.plugins.stripe"/>
+    </js-module>
+    <js-module name="CordovaStripe" src="www/CordovaStripe.js"/>
+
+    <platform name="android" kotlin="1.4.20">
+
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="CordovaStripe">
+                <param name="android-package" value="com.zyramedia.cordova.stripe.CordovaStripe"/>
+            </feature>
+        </config-file>
+
+        <config-file parent="./application" target="AndroidManifest.xml">
+            <meta-data
+                    android:name="com.google.android.gms.wallet.api.enabled"
+                    android:value="true"/>
+        </config-file>
+        <source-file src="src/android/JSArray.java" target-dir="app/src/main/kotlin/com/zyramedia/cordova/stripe"/>
+        <source-file src="src/android/JSObject.java" target-dir="app/src/main/kotlin/com/zyramedia/cordova/stripe"/>
+        <source-file src="src/android/EphKeyProvider.kt" target-dir="app/src/main/kotlin/com/zyramedia/cordova/stripe"/>
+        <source-file src="src/android/Helpers.kt" target-dir="app/src/main/kotlin/com/zyramedia/cordova/stripe"/>
+        <source-file src="src/android/StripePaymentMethodsListener.kt" target-dir="app/src/main/kotlin/com/zyramedia/cordova/stripe"/>
+        <source-file src="src/android/GooglePayHelper.kt" target-dir="app/src/main/kotlin/com/zyramedia/cordova/stripe"/>
+        <source-file src="src/android/CordovaStripe.kt" target-dir="app/src/main/kotlin/com/zyramedia/cordova/stripe"/>
+        <apply-plugin>kotlin-android</apply-plugin>
+        <apply-plugin>kotlin-android-extensions</apply-plugin>
+        <framework src="com.google.android.gms:play-services-wallet:18.0.0"/>
+        <framework src="com.stripe:stripe-android:16.1.1"/>
+        <framework src="com.google.code.gson:gson:2.8.6"/>
+        <framework src="androidx.appcompat:appcompat:1.1.0"/>
+    </platform>
+
+    <platform name="ios">
+        <framework src="Stripe" type="podspec" spec="~> 22.7.1" />
+        <config-file target="config.xml" parent="/*">
+            <feature name="CordovaStripe">
+                <param name="ios-package" value="CordovaStripe"/>
+            </feature>
+        </config-file>
+
+        <source-file src="src/ios/CordovaStripe.swift"/>
+        <source-file src="src/ios/CustomerKeyProvider.swift"/>
+        <source-file src="src/ios/Helper.swift"/>
+        <source-file src="src/ios/PKAuthViewDelegate.swift"/>
+        <source-file src="src/ios/STPAuthCtx.swift"/>
+    </platform>
+
+    <platform name="browser">
+
+        <config-file target="config.xml" parent="/*">
+            <feature name="CordovaStripe">
+                <param name="browser-package" value="CordovaStripe"/>
+            </feature>
+        </config-file>
+
+        <js-module src="src/browser/CordovaStripe.js" name="CordovaStripe">
+            <runs/>
+        </js-module>
+
+    </platform>
+
+</plugin>
